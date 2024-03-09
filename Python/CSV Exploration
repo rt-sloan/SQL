@@ -1,0 +1,41 @@
+In this Python source code I am using the pandas library to explore a csv file. I read the basic info about the file and what data types are associated with each file. 
+
+import pandas as pd
+
+
+
+#Create a variable that holds the file path to csv files
+fpmovies = r'C:\Users\doaal\Desktop\Python\CSV_Files\movies.csv'
+fpgames = r'C:\Users\doaal\Desktop\Python\CSV_Files\games.csv'
+
+#Create a function that serves as a template to call a certain csv file
+#The 'fp' argument means we have to start our csv filepath variables with the argument
+def read_csv_file(fp):
+    df = pd.read_csv(fp)
+    return df
+
+#read movies and games. Create a variable for each csv you want to read.
+dfmovies = read_csv_file(fpmovies)
+dfgames = read_csv_file(fpgames)
+
+#Show basic info about the files
+print(dfmovies.info())
+# print (dfgames.info())
+
+#Show the first 5 rows of the file. Put a number in between the () to specify how many rows you want to see
+print(dfmovies.head())
+# print(dfgames.head(10))
+
+
+#Set the options for the maximum number of rows we can view
+pd.options.display.max_rows = 61
+
+#Show me how many max rows we can print. 
+print('\nMax Rows')
+print(pd.options.display.max_rows) 
+
+#Show me hoow many columns are in the csv file.
+print("Number of colums", dfmovies.shape[1])
+
+#Show me how many rows are in the csv file. 
+print("Number of rows", dfmovies.shape[0])

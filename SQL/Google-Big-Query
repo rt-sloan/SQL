@@ -1,2 +1,91 @@
 The following SQL code is written in the Google Big Query Sandbox. 
 The datasets are from Big Query Public Data.
+
+
+
+
+
+
+Sort Movies by release date oldest to newest
+SELECT *
+FROM ProjectID.MovieData.Movies
+Order By Release_Date
+
+Filter and Sort movies by comedy genre and release date newest to oldest
+SELECT *
+FROM ProjectID.MovieData.Movies
+WHERE Genre = 'Comedy'
+Order By Release_date DESC;
+
+Filter and sort movies by comedy genre, if they made over $300,000,000 million, and sort those movies by release date newest to oldest
+SELECT *
+FROM ProjectID.MovieData.Movies
+WHERE Genre = 'Comedy'
+AND Revenue > 300000000
+Order By Release_date DESC;
+
+Filtering out all non needed columns and only showing the title, release date, and revenue and filtering only comedy movies that earned over 300 million. 
+select
+Movie_Title, Release_Date, Revenue
+from
+MovieData.Movies
+where
+Genre = 'Comedy'
+and
+Revenue > 300000000
+order by
+Release_Date DESC;
+
+What was the average temperature in JFK and LaGuardia from June 1 to June 30,2020
+SELECT  
+AVG(temperature)
+FROM `course-2-module-3-project.demos.NYCWeather`
+where
+date
+between '2020-06-01' AND '2020-06-30'
+
+
+
+Is the number of births increasing or decreasing for the following 3 New York State counties?
+select
+Year, County_of_Residence, Births --Only using the most relevant columns
+from
+bigquery-public-data.sdoh_cdc_wonder_natality.county_natality --Our public data set we are using
+where
+County_of_Residence = "Erie County, NY" --The counties we want to filter for
+OR County_of_Residence = "Niagara County, NY"
+OR County_of_Residence = "Chautauqua County, NY"
+order by
+Births DESC --We want to see highest number of births to lowest number of births by county
+limit -- we are showing the top 10 results
+10
+
+
+Find the average route duration from start to finish in the new york city bike trips dataset from big query.
+SELECT
+  usertype,
+  CONCAT (start_station_name," to ", end_station_name) AS route, 
+  COUNT (*) as num_trips,
+  ROUND(AVG(cast(tripduration as int64)/60),2) AS duration – Change trip duration from seconds to minutes and round to 2 decimal places
+FROM 
+  `bigquery-public-data.new_york.citibike_trips`
+GROUP BY
+  start_station_name, end_station_name, usertype 
+ORDER BY 
+  num_trips DESC 
+LIMIT 10
+
+Merge rows from 2 tables together using INNER JOIN. Showcasing the employee name, their role, and their department. 
+SELECT
+  Employees.name AS employee_name,
+  Employees.role AS employee_role,
+  Departments.name AS department_name,
+FROM
+  EmployeeData.Employees
+INNER JOIN
+  EmployeeData.Departments ON
+  Employees.department_id = Departments.department_id
+
+
+
+
